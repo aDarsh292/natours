@@ -106,7 +106,7 @@ const tourSchema = new mongoose.Schema(
     guides: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: 'User'
+        ref: 'User',
       },
     ],
   },
@@ -118,6 +118,13 @@ const tourSchema = new mongoose.Schema(
 
 tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
+});
+
+// Virtual populate
+tourSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'tour',
+  localField: '_id',
 });
 
 //DCOUMENT MIDDLEWARE: runs before .save() & .create()
@@ -151,14 +158,14 @@ tourSchema.pre(/^find/, function (next) {
   next();
 });
 
-tourSchema.pre(/^find/, function(next) {
+tourSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'guides',
     select: '-__v -passwordChangedAt',
   });
 
   next();
-})
+});
 
 tourSchema.post(/^find/, function (docs, next) {
   console.log(`Query tool ${Date.now() - this.start} milliseconds!`);
