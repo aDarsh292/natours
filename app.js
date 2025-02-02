@@ -25,15 +25,31 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Set security HTTP headers
-// app.use(helmet());
+app.use(helmet());
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'", 'https:', 'http:', 'data:', 'ws:'],
+      imgSrc: [
+        "'self'",
+        'data:',
+        'blob:',
+        'https://tile.openstreetmap.org',
+        'https://a.tile.openstreetmap.org',
+        'https://b.tile.openstreetmap.org',
+        'https://c.tile.openstreetmap.org',
+        'https://unpkg.com',
+      ],
       baseUri: ["'self'"],
       fontSrc: ["'self'", 'https:', 'http:', 'data:'],
-      scriptSrc: ["'self'", 'https:', 'http:', 'blob:'],
+      scriptSrc: ["'self'", 'https:', 'http:', 'blob:', "'unsafe-eval'"],
       styleSrc: ["'self'", "'unsafe-inline'", 'https:', 'http:'],
+      connectSrc: [
+        "'self'",
+        'ws://127.0.0.1:1234',
+        'ws://127.0.0.1:62680',
+        'https://tile.openstreetmap.org',
+      ],
     },
   })
 );

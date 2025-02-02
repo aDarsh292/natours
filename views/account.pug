@@ -29,10 +29,10 @@ block content
       .user-view__content
         .user-view__form-container
           h2.heading-secondary.ma-bt-md Your account settings
-          
+
           //- WITHOUT API
-          //- form.form.form-user-data(action='/submit-user-data' method='POST')
-          
+          //- form.form.form-user-data(action='/submit-user-data' method='POST' enctype='multipart/form-data')
+
           //- WITH API
           form.form.form-user-data
             .form__group
@@ -45,10 +45,10 @@ block content
               img.form__user-photo(src=`/img/users/${user.photo}`, alt='User photo')
               a.btn-text(href='') Choose new photo
             .form__group.right
-              button.btn.btn--small.btn--green Save settings
-              
+              button.btn.btn--small.btn--green.btn--save-settings Save settings
+
         .line &nbsp;
-        
+
         .user-view__form-container
           h2.heading-secondary.ma-bt-md Password change
           form.form.form-user-password
